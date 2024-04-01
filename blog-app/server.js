@@ -61,6 +61,18 @@ db.run(
   }
 );
 
+db.run("ALTER TABLE posts ADD COLUMN userId INTEGER", (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+});
+
+db.run("DROP TABLE IF EXISTS new_posts", (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+});
+
 // Define routes here...
 // Get all blog posts
 
@@ -113,7 +125,7 @@ app.get("/posts", (req, res) => {
   const sql = `
       SELECT posts.id, posts.title, posts.content, users.username as author
       FROM posts
-      JOIN users ON posts.userId = users.id
+      LEFT JOIN users ON posts.userId = users.id
     `;
   db.all(sql, [], (err, posts) => {
     if (err) {
