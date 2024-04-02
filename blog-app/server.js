@@ -196,7 +196,7 @@ app.delete("/posts/:id", (req, res) => {
 // Get all comments for a blog post
 app.get("/posts/:id/comments", (req, res) => {
   const sql = `
-    SELECT comments.id, comments.text, users.username as author
+    SELECT comments.id, comments.text, comments.userId, users.username as author
     FROM comments
     LEFT JOIN users ON comments.userId = users.id
     WHERE comments.postId = ?
@@ -247,6 +247,7 @@ app.delete("/comments/:id", (req, res) => {
     res.json({ changes: this.changes });
   });
 });
+
 // Start the server
 app.listen(5000, () => {
   console.log("Server is running on port 5000");

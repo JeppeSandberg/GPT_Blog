@@ -66,7 +66,35 @@ form button[type="submit"]:hover {
 form p {
   color: red;
 }
+.create-post-form {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
 
+.create-post-form input[type="text"],
+.create-post-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.create-post-form button[type="submit"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.create-post-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
 .post {
   background-color: #fff;
   padding: 20px;
@@ -84,11 +112,20 @@ form p {
 }
 
 .comment {
-  background-color: #fff;
+  background-color: #f9f9f9;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
+}
+
+.comment-author {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.comment-text {
+  margin-bottom: 10px;
 }
 
 @keyframes App-logo-spin {

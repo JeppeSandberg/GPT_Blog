@@ -1,24 +1,42 @@
-// src/App.js
 import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Posts from "./Posts";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
 import CreatePost from "./CreatePost";
 import "./App.css";
 
 function App() {
+  const username = localStorage.getItem("username");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>My Blog</h1>
-      </header>
-      <main>
-        <LoginForm />
-        <RegisterForm />
-        <CreatePost />
-        <Posts />
-      </main>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <h1>My Blog</h1>
+          <nav>
+            <Link to="/login">Login</Link> |{" "}
+            <Link to="/register">Register</Link>
+          </nav>
+          {username && <p>Welcome, {username}!</p>}
+        </header>
+        <main>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <CreatePost />
+                  <Posts />
+                </>
+              }
+            />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 

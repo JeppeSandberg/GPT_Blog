@@ -13,6 +13,7 @@ function LoginForm() {
       .post("http://localhost:5000/login", { username, password })
       .then((response) => {
         localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("username", username); // Store the username
         window.location.href = "/";
       })
       .catch((error) => {

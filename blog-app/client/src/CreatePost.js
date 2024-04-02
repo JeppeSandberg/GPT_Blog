@@ -20,7 +20,7 @@ function CreatePost() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="create-post-form">
       <input
         type="text"
         value={title}
