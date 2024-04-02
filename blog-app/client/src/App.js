@@ -4,6 +4,7 @@ import Posts from "./Posts";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import CreatePost from "./CreatePost";
+import "./App.css";
 
 function App() {
   return (

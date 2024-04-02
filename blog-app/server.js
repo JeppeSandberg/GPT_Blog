@@ -73,6 +73,12 @@ db.run("DROP TABLE IF EXISTS new_posts", (err) => {
   }
 });
 
+db.run("ALTER TABLE comments ADD COLUMN userId INTEGER", (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+});
+
 // Define routes here...
 // Get all blog posts
 
@@ -110,7 +116,7 @@ app.post("/login", (req, res) => {
           return;
         }
         if (result) {
-          res.json({ id: row.id, username: row.username });
+          res.json({ userId: row.id, username: row.username }); // Make sure userId is included here
         } else {
           res.status(401).json({ error: "Invalid password" });
         }
@@ -123,13 +129,13 @@ app.post("/login", (req, res) => {
 
 app.get("/posts", (req, res) => {
   const sql = `
-      SELECT posts.id, posts.title, posts.content, users.username as author
-      FROM posts
-      LEFT JOIN users ON posts.userId = users.id
-    `;
+    SELECT posts.id, posts.title, posts.content, posts.userId, users.username as author
+    FROM posts
+    LEFT JOIN users ON posts.userId = users.id
+  `;
   db.all(sql, [], (err, posts) => {
     if (err) {
-      console.log(err); // Add this line
+      console.log(err);
       res.status(500).json({ error: err.message });
       return;
     }
@@ -189,21 +195,26 @@ app.delete("/posts/:id", (req, res) => {
 
 // Get all comments for a blog post
 app.get("/posts/:id/comments", (req, res) => {
-  const sql = "SELECT * FROM comments WHERE postId = ?";
-  db.all(sql, [req.params.id], (err, rows) => {
+  const sql = `
+    SELECT comments.id, comments.text, users.username as author
+    FROM comments
+    LEFT JOIN users ON comments.userId = users.id
+    WHERE comments.postId = ?
+  `;
+  db.all(sql, [req.params.id], (err, comments) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
     }
-    res.json(rows);
+    res.json(comments);
   });
 });
 
 // Add a comment to a blog post
 app.post("/posts/:id/comments", (req, res) => {
-  const { text } = req.body;
-  const sql = "INSERT INTO comments (postId, text) VALUES (?,?)";
-  db.run(sql, [req.params.id, text], function (err) {
+  const { text, userId } = req.body;
+  const sql = "INSERT INTO comments (postId, text, userId) VALUES (?,?,?)";
+  db.run(sql, [req.params.id, text, userId], function (err) {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
