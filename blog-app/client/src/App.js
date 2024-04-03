@@ -15,8 +15,7 @@ function App() {
         <header className="App-header">
           <h1>My Blog</h1>
           <nav>
-            <Link to="/login">Login</Link> |{" "}
-            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link> | <Link to="/register">Register</Link>
           </nav>
           {username && <p>Welcome, {username}!</p>}
         </header>
@@ -24,15 +23,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/"
-              element={
-                <>
-                  <CreatePost />
-                  <Posts />
-                </>
-              }
-            />
+            <Route path="/" element={<><CreatePost /><Posts /></>} />
           </Routes>
         </main>
       </div>

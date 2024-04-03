@@ -59,9 +59,7 @@ function Comments({ postId }) {
             <p className="comment-text">{comment.text}</p>
             {comment.userId === userId && (
               <>
-                <button onClick={() => handleEdit(comment.id, comment.text)}>
-                  Edit
-                </button>
+                <button onClick={() => handleEdit(comment.id, comment.text)}>Edit</button>
                 <button onClick={() => handleDelete(comment.id)}>Delete</button>
               </>
             )}
